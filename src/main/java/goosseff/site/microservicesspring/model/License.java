@@ -2,9 +2,10 @@ package goosseff.site.microservicesspring.model;
 
 
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 @Data
-public class License {
+public class License extends RepresentationModel<License> {
     private int id;
     private String licenseId;
     private String description;
