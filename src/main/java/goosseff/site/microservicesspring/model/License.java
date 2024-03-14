@@ -10,6 +10,6 @@ public class License {
     private String description;
     private String organizationId;
     private String productName;
-    private  String licenseType;
+    private String licenseType;
 
 }
