@@ -9,12 +9,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>goosseff.site</groupId>
-    <artifactId>microServicesSpring</artifactId>
+    <artifactId>microservicesspring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>microServicesSpring</name>
+    <name>microservicesspring</name>
     <description>microServicesSpring</description>
     <properties>
         <java.version>11</java.version>
+        <docker.image.prefix>009123</docker.image.prefix>
     </properties>
     <dependencies>
         <dependency>
@@ -31,6 +32,10 @@
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -58,6 +63,33 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- This plugin is used to create a docker image and publish the image to docker hub-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.13</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
         </plugins>
     </build>
 
